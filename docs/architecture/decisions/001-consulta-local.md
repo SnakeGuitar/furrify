@@ -9,3 +9,5 @@ English · [Español](001-consulta-local.es.md)
 **Decision** Use React, Vite and TypeScript with an asynchronous lookup of predefined shortlists. A demo code selects the scenario.
 
 **Consequences** Developers can exercise loading, recovery and results with the same data on each run. Live reviews, persistence and access control are prerequisites for handling personal information.
+
+This decision is scoped to the local prototype. The confirmed functional architecture is defined in [ADR 002](002-functional-architecture.md).

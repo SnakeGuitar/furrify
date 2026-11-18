@@ -2,11 +2,20 @@
 
 English · [Español](acceptance-criteria.es.md)
 
-The [requirements](requirements.md) define the criteria. Use this map to locate the corresponding checks.
+The [requirements](requirements.md) are authoritative. “Proposed” means awaiting implementation, “implemented” means inspected code and “verified” requires an identified execution. This task reviews documentation only and does not refresh historical evidence.
 
-| ID | Where to observe it | Verification |
-|---|---|---|
-| RF-005 | Lookup panel and adapter in `src/catalog.ts` | `npm test` checks shortlist size, uniqueness and reasons. `npm run browser` exercises all four cases in the UI. |
-| RNF-001 | Browser console and `src/events.ts` | The browser test checks event correlation, unexpected errors and recovery after a failed lookup. |
-| RNF-002 | `scripts/verify.mjs` and the run directory | Inspect exit codes, logs, source fingerprint and statuses using the [verification guide](../agents/verification.md). |
-| RF-001–004, RF-006–008 | Future screens | Implementation and verification pending. |
+| RN | RF / RNF | Responsible module | Acceptance method | Status |
+|---|---|---|---|---|
+| RN-001, RN-002 | RF-002, RNF-003/004 | Requests, Access | Approved age policy, field validation and cross-owner rejection | Proposed |
+| RN-003 | RF-006/013, RNF-004 | Makers | Revoke a work and confirm disappearance | Proposed |
+| RN-004–006 | RF-004/011, RNF-005 | Matching, Makers | Atomic publication, three-maker limit and eligibility check | Proposed |
+| RN-005, RN-009 | RF-005, RNF-001 | Matching, UI | Demo FUR-101, FUR-000, FUR-503 and invalid input | Demo implemented, V1 proposed |
+| RN-007 | RF-007/009/012, RNF-003/004 | Matching, Access | Reject another owner's access and contact without permission | Proposed |
+| RN-008 | RF-003/010/011, RNF-005 | Requests, Matching, Access | Authorized transitions and concurrent update conflicts | Proposed |
+| RN-010 | RF-008, RNF-005 | Matching | Persist outcome with author and time | Proposed |
+| RN-011 | RF-001 | UI | Review service-page boundaries | Proposed |
+| Cross-cutting | RNF-001/002/011 | Local harness | Events, exit codes and source manifest | Implemented |
+| Cross-cutting | RNF-006/007/008 | UI, API | Accessibility review, device coverage and load measurements | Proposed, targets pending |
+| Cross-cutting | RNF-009/010/012 | Infrastructure | Restore, dependency checks and container recreation | Proposed |
+
+Existing commands and evidence format are in the [guide](../agents/verification.md). Future tests described here have no backend or Compose scripts yet.

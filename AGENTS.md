@@ -2,23 +2,50 @@
 
 English · [Español](AGENTS.es.md)
 
-The pilot connects adult buyers with independent makers. The prototype displays a fictional, manually curated shortlist. Before changing behavior, read the [documentation index](docs/README.md), [product requirements](docs/product/requirements.md) and [acceptance map](docs/product/acceptance-criteria.md).
+Furrify connects adult buyers with independent fursuit and accessory makers.
+Current code only displays a local fictional shortlist.
 
-Run these commands from the repository root with Node.js 22.18 or later and npm.
+## Sources
+- [Human documentation index](docs/README.md).
+- [Authoritative requirements](docs/product/requirements.md).
+- [Current and target architecture](docs/architecture/overview.md).
+- [Acceptance map](docs/product/acceptance-criteria.md).
+- [Human decision register](docs/humans/decisions.md).
 
-| Command | Purpose |
-|---|---|
-| `npm ci` | Install the locked dependencies. |
-| `npx playwright install chromium --only-shell` | Install the browser once. |
-| `npm run dev` | Start Vite. |
-| `npm run check` | Run strict TypeScript checks. |
-| `npm test` | Test the domain behavior. |
-| `npm run build` | Build the distribution. |
-| `npm run browser` | Test the most recent build in Chromium. |
-| `npm run verify` | Run all checks and write evidence. |
+## Constraints
+The confirmed stack is React, TypeScript, Vite, ASP.NET Core with C#, PostgreSQL, Docker and Compose.
+The target backend is one modular monolith using Clean Architecture.
+Domain stays independent of ASP.NET Core, ORM and PostgreSQL.
+Infrastructure implements inward-defined ports.
+Modules communicate through explicit in-process contracts.
+Each module owns its data. Avoid direct access to another module's tables.
+Keep manual selection of up to three makers with reasons.
+Enforce publication and contact permissions.
+Consult pending decisions when a change affects their scope.
+A proposal requires approval before it becomes confirmed policy.
+Keep fixtures behind the adapter and sensitive data out of events.
 
-Keep fictional data behind the adapter and maker selection manual. Use predefined event names and a temporary operation ID. Omit user input and exception details from events.
+## Existing commands
+Run from the root with Node.js ≥22.18 and npm.
 
-Use English as the primary documentation language. Update the English page and its Spanish translation together. Write commit subjects in English with a Conventional Commits prefix, for example `docs: explain the demo` or `fix: handle empty selections`.
+```sh
+npm ci
+npx playwright install chromium --only-shell
+npm run dev
+npm run check
+npm test
+npm run build
+npm run browser
+npm run verify
+```
 
-Follow the [development workflow](docs/agents/workflow.md). A finished change has observable acceptance criteria, a reviewed diff, current documentation and a report listing commands, results, evidence paths and any blocked or outstanding checks.
+## Completing a change
+Read the relevant details through these links.
+Follow the [workflow](docs/agents/workflow.md).
+English is primary. Update translations alongside originals.
+Use English Conventional Commits subjects.
+Review the diff, acceptance, documentation and proportionate evidence.
+For documentation-only changes, check links, IDs, translations and consistency.
+Report passed, failed, blocked or not_run according to evidence.
+Include commands, results, checked revision and evidence paths.
+State which checks were omitted and why.

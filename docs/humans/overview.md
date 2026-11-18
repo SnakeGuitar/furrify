@@ -9,3 +9,5 @@ Today you can open a sample shortlist and read two different reasons for the rec
 The buyer and maker handle production and their commercial agreement. Payments, delivery guarantees, production tracking and chat are outside the pilot's scope.
 
 The team still needs to decide how to confirm adulthood, which details may be shared with permission, how makers authorize portfolio items and which outcomes to record. [Try the demo](demo-guide.md).
+
+The functional specification is in the [requirements](../product/requirements.md), [architecture](../architecture/overview.md) and [decision register](decisions.md).

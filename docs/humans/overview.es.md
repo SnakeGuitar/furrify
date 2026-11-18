@@ -9,3 +9,5 @@ Hoy puedes abrir una selección de ejemplo y leer dos motivos distintos. Los nom
 La fabricación y los acuerdos comerciales corresponden a comprador y maker. Furrify queda fuera de la gestión de dinero, las garantías de entrega y el seguimiento del encargo. El piloto tampoco contempla un chat.
 
 Queda por decidir cómo se confirma la mayoría de edad, qué información se comparte tras el permiso de contacto, cómo se autoriza cada obra del portafolio y qué resultados registra el equipo. [Probar la demostración](demo-guide.es.md).
+
+La especificación funcional está en los [requisitos](../product/requirements.es.md), la [arquitectura](../architecture/overview.es.md) y el [registro de decisiones](decisions.es.md).

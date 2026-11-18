@@ -17,4 +17,4 @@ Each ignored `.evidence/<date-uuid>/` directory contains `result.json`, `summary
 
 A successful browser test saves `seleccion.png` and `events.json`. A failure with an open browser context saves `failure.zip` and, if the page is available, `failure.png`. Open the trace with `npx playwright show-trace path/failure.zip`. Assertions determine the outcome. The screenshot supports human inspection. The verifier returns the first available unsuccessful exit code.
 
-The repository started locally. A future GitHub CI job can install the dependencies and run the same verification command.
+A future GitHub CI job can install the dependencies and run the same verification command. For documentation-only work, report link, ID, translation and consistency checks. Application checks remain not_run by scope.

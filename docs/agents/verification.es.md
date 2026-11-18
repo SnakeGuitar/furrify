@@ -17,4 +17,4 @@ Cada carpeta ignorada `.evidence/<fecha-uuid>/` conserva `result.json`, `summary
 
 En éxito, el navegador guarda `seleccion.png` y `events.json`. Ante un fallo con contexto abierto conserva `failure.zip` y, si la página sigue disponible, `failure.png`. Abre una traza con `npx playwright show-trace ruta/failure.zip`. Las aserciones deciden el resultado. La captura sirve para inspección humana. El verificador propaga el primer código no exitoso disponible.
 
-El repositorio inicial es local, sin remoto GitHub. Si se conecta a GitHub, el job de CI puede instalar las dependencias y ejecutar el mismo comando integral.
+Un futuro job de CI puede instalar dependencias y ejecutar el mismo comando integral. Para documentación sola, reportar revisión de enlaces, IDs, traducciones y coherencia. Las pruebas de aplicación quedan not_run por alcance.
