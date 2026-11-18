@@ -19,3 +19,5 @@ Los [requisitos](requirements.es.md) son la fuente autoritativa. “Propuesto”
 | Transversal | RNF-009/010/012 | Infraestructura | Restauración, dependencias y recreación de contenedor | Propuesto |
 
 Comandos actuales y formato de evidencia en la [guía](../agents/verification.es.md). Las pruebas futuras descritas aquí carecen todavía de scripts de backend o Compose.
+
+La trazabilidad transaccional RN → RF/RNF → UC → nivel → evidencia está en la [estrategia](../humans/testing-strategy.es.md). UC → módulo → contrato → endpoint está en [contratos](../architecture/contracts.es.md). RF-014–023 y RNF-013–015 están propuestos y sin implementar. Ninguna suite nueva está verificada.

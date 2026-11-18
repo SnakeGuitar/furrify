@@ -18,3 +18,5 @@ Each ignored `.evidence/<date-uuid>/` directory contains `result.json`, `summary
 A successful browser test saves `seleccion.png` and `events.json`. A failure with an open browser context saves `failure.zip` and, if the page is available, `failure.png`. Open the trace with `npx playwright show-trace path/failure.zip`. Assertions determine the outcome. The screenshot supports human inspection. The verifier returns the first available unsuccessful exit code.
 
 A future GitHub CI job can install the dependencies and run the same verification command. For documentation-only work, report link, ID, translation and consistency checks. Application checks remain not_run by scope.
+
+Future mechanisms and commands are defined in the [human strategy](../humans/testing-strategy.md). Select checks by risk and change type; never present future commands as available or a fake provider as validated Sandbox.

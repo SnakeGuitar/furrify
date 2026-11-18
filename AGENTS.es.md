@@ -13,10 +13,13 @@ El código actual solo muestra una selección ficticia local.
 - [Matriz de aceptación](docs/product/acceptance-criteria.es.md).
 - [Decisiones reservadas a humanos](docs/humans/decisions.es.md).
 
+- [Contratos transaccionales](docs/architecture/contracts.es.md).
+- [Estrategia de pruebas](docs/humans/testing-strategy.es.md).
+
 ## Restricciones
 La pila confirmada es React, TypeScript, Vite, ASP.NET Core con C#, PostgreSQL, Docker y Compose.
 El backend objetivo es un único monolito modular con Clean Architecture.
-Dominio independiente de ASP.NET Core, ORM y PostgreSQL.
+Dominio independiente de ASP.NET Core, ORM, PostgreSQL y PayPal.
 Infraestructura implementa puertos interiores.
 Comunicación entre módulos por contratos explícitos dentro del proceso.
 Cada módulo posee sus datos. Evitar acceso directo a tablas ajenas.
@@ -50,3 +53,5 @@ Para cambios solo documentales, comprobar enlaces, IDs, traducciones y coherenci
 Reportar passed, failed, blocked o not_run según evidencia.
 Indicar comandos, resultados, revisión comprobada y rutas de evidencia.
 Declarar comprobaciones omitidas y causa.
+
+Para dinero, usar suites unitarias, integración y sistema; Sandbox se informa separadamente. Comandos futuros están solo en la estrategia.

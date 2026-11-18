@@ -19,3 +19,5 @@ The [requirements](requirements.md) are authoritative. “Proposed” means awai
 | Cross-cutting | RNF-009/010/012 | Infrastructure | Restore, dependency checks and container recreation | Proposed |
 
 Existing commands and evidence format are in the [guide](../agents/verification.md). Future tests described here have no backend or Compose scripts yet.
+
+Transactional RN → RF/RNF → UC → level → evidence mapping is in the [strategy](../humans/testing-strategy.md). UC → module → contract → endpoint mapping is in [contracts](../architecture/contracts.md). RF-014–023 and RNF-013–015 are proposed and unimplemented. No new suite is verified.

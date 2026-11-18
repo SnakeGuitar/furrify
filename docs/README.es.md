@@ -14,3 +14,11 @@
 - [Ciclo de vida / Lifecycle](architecture/lifecycle.es.md)
 - [Decisiones humanas / Human decisions](humans/decisions.es.md)
 - [ADR 002](architecture/decisions/002-functional-architecture.es.md) · [ADR 003](architecture/decisions/003-module-persistence.es.md)
+
+## Diseño transaccional
+
+- [Contratos, casos de uso y pantallas](architecture/contracts.es.md)
+- [Dominio y persistencia](architecture/commerce-model.es.md)
+- [Diseño de pagos](architecture/payments.es.md)
+- [Estrategia de pruebas y criterios por incremento](humans/testing-strategy.es.md)
+- [ADR 004](architecture/decisions/004-transactional-scope.es.md)

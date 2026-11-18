@@ -23,3 +23,19 @@ Cada fila identifica pregunta, necesidad, opciones, recomendación y efecto de p
 
 ## Consolidación de esta revisión
 El backend antes opcional pasa a decisión confirmada. ADR 001 se limita al prototipo local. Se conserva significado e ID de RF-001–008 y RNF-001–002 y se amplía aceptación. Se separan RF-009–013 para consulta propia, acceso interno, publicación, presentación y mantenimiento de makers. Implementación de demo y propuesta V1 tienen estados separados. Un registro humano centraliza huecos y evita tratarlos como reglas aprobadas.
+
+## Cambio transaccional confirmado
+
+El encargo actual incluye contratación y pagos con integración PayPal Sandbox real. Sustituye exclusión previa de pagos. Ningún mecanismo de monetización está aprobado. [ADR 004](../architecture/decisions/004-transactional-scope.es.md).
+
+## Prioridad de nuevas decisiones
+
+D-08, D-09 y D-10 preceden habilitación financiera; D-01/02 y D-11 preceden acceso real. D-03/04/05/06/07 siguen vigentes.
+
+| ID | Pregunta | Opciones y recomendación | Consecuencia, bloqueos y trabajo posible |
+|---|---|---|---|
+| D-08 | ¿Quién recibe el dinero y cuál es la comisión? | A maker sin comisión, B maker con comisión, C Furrify con transferencia. Recomendar validar A primero sin aprobarlo comercialmente. | Afecta receptor de pedido, onboarding y adaptador; bloquea cobro real y producción. Contratos y falso pueden diseñarse con A explícito. |
+| D-09 | ¿Se paga total o anticipos, en qué monedas, con qué cancelación y cambios? | Total inicial o calendario de obligaciones; recomendar un pago total solo como fixture inicial. Decidir vigencia, límites, redondeo y efectos de cambios. | Bloquea acuerdo real y aceptación final RF-014–018/022; permite modelo de obligaciones y snapshot. |
+| D-10 | ¿Quién autoriza reembolsos y cómo se tratan comisiones, incidencias y disputas? | Maker, personal delegado o revisión conjunta. Recomendar autorización explícita separada de solicitud. | Bloquea ejecución real RF-021/023 y operación; permite reservas, idempotencia y Sandbox con política ficticia. |
+| D-11 | ¿Cómo se acredita maker y qué puede ver/emitir? | Cuenta propia o personal delegado, roles por maker. Recomendar identidad explícita y acceso solo a solicitud compartida por permiso. | Bloquea datos reales y cotización efectiva; permite contratos y pruebas de permisos. |
+| D-12 | ¿Una solicitud puede contratar más de un maker? | Un pedido activo o varios por producto. Proponer uno activo para primer recorrido. | Afecta unicidad y resultados; mientras pendiente probar supuesto de uno sin marcar otras recomendaciones contratadas. |

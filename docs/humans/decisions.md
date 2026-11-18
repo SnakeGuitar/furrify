@@ -23,3 +23,19 @@ Each row identifies the question, need, options, recommendation and effect of de
 
 ## Consolidation in this review
 The formerly optional backend becomes confirmed. ADR 001 is scoped to the local prototype. RF-001–008 and RNF-001–002 retain their meaning and IDs with expanded acceptance. RF-009–013 separate owner lookup, staff access, publication, introduction and maker maintenance. Demo implementation and V1 proposal statuses are distinct. One human register centralizes unresolved policy.
+
+## Confirmed transactional change
+
+The current brief includes contracting and payments with real PayPal Sandbox integration. It supersedes the earlier payments exclusion. No monetization mechanism is approved. [ADR 004](../architecture/decisions/004-transactional-scope.md).
+
+## New decision priority
+
+D-08, D-09 and D-10 precede financial enablement; D-01/02 and D-11 precede real access. D-03/04/05/06/07 remain applicable.
+
+| ID | Question | Options and recommendation | Consequences, blockers and work allowed |
+|---|---|---|---|
+| D-08 | Who receives funds and what fee applies? | A maker without fee, B maker with fee, C Furrify with transfer. Recommend validating A first without commercial approval. | Affects order recipient, onboarding and adapter; blocks live charging and production. Contracts/fake can use explicit A fixtures. |
+| D-09 | Full payment or deposits, which currencies, cancellation and amendments? | Full payment or obligation schedule; recommend full payment only as initial fixture. Decide expiry, bounds, rounding and amendment effects. | Blocks real agreement and final RF-014–018/022 acceptance; obligation model and snapshots can proceed. |
+| D-10 | Who authorizes refunds and handles fees, incidents and disputes? | Maker, delegated staff or joint review. Recommend explicit authorization separate from request. | Blocks live RF-021/023 and operations; reservations, idempotency and fictional-policy Sandbox can proceed. |
+| D-11 | How is maker identity established and what can they view/issue? | Own account or delegated staff, maker-scoped roles. Recommend explicit identity and only consent-shared request access. | Blocks real data and effective quoting; contracts and permission tests can proceed. |
+| D-12 | Can one request hire several makers? | One active order or several per product. Propose one active order for first journey. | Affects uniqueness and outcomes; tests can use explicit single-order assumption without marking other recommendations contracted. |

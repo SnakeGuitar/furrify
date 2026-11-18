@@ -18,3 +18,5 @@ Cada carpeta ignorada `.evidence/<fecha-uuid>/` conserva `result.json`, `summary
 En éxito, el navegador guarda `seleccion.png` y `events.json`. Ante un fallo con contexto abierto conserva `failure.zip` y, si la página sigue disponible, `failure.png`. Abre una traza con `npx playwright show-trace ruta/failure.zip`. Las aserciones deciden el resultado. La captura sirve para inspección humana. El verificador propaga el primer código no exitoso disponible.
 
 Un futuro job de CI puede instalar dependencias y ejecutar el mismo comando integral. Para documentación sola, reportar revisión de enlaces, IDs, traducciones y coherencia. Las pruebas de aplicación quedan not_run por alcance.
+
+Los mecanismos y comandos futuros se definen en la [estrategia humana](../humans/testing-strategy.es.md). Elegir comprobaciones por riesgo y tipo de cambio; no presentar comandos futuros como disponibles ni proveedor falso como Sandbox validado.

@@ -6,7 +6,7 @@ English · [Español](overview.es.md)
 React, TypeScript and Vite display a fictional shortlist. `src/main.tsx` handles UI states, `src/catalog.ts` normalizes codes and reads asynchronous fixtures, and `src/events.ts` emits local events. State lives in memory. Existing scripts check types, domain behavior, build and browser flows. Demo codes are not credentials.
 
 ## Target context and containers
-Buyers browse and submit, staff review and introduce, and makers authorize their public content. Furrify ends at the introduction and its outcome. The production agreement belongs to buyer and maker.
+Buyers browse and submit, staff review and introduce, and makers authorize their public content. The transactional target includes quote acceptance, orders, payments, refunds and incidents. Buyer and maker remain the production counterparties.
 
 The confirmed stack is React + TypeScript + Vite, ASP.NET Core with C#, PostgreSQL, Docker and Docker Compose. One modular monolith backend applies Clean Architecture. Backend and container versions and additional libraries remain pending.
 
@@ -14,9 +14,11 @@ The confirmed stack is React + TypeScript + Vite, ASP.NET Core with C#, PostgreS
 flowchart LR
  Buyer -->|HTTPS| Web[React frontend]
  Staff -->|HTTPS| Web
- Maker -->|authorizes content through approved process| Staff
+ Maker -->|HTTPS after approved access| Web
  Web -->|HTTP JSON| API[ASP.NET Core API]
  API -->|SQL| DB[(PostgreSQL)]
+ API -->|HTTPS orders and payments| PayPal[External PayPal Sandbox]
+ PayPal -->|HTTPS verified webhooks| API
 ```
 
 This diagram describes target actors and runtime boundaries. Maker authorization does not imply an approved self-service account.
@@ -29,7 +31,8 @@ flowchart LR
  Maker[Independent maker] -->|authorizes profile and works| Furrify
  Furrify -->|publishes justified recommendations| Buyer
  Furrify -->|authorized introduction| Maker
- Buyer <-->|production agreement outside Furrify| Maker
+ Buyer <-->|manufacturing responsibility| Maker
+ Furrify -->|order and payment orchestration| PayPal[External PayPal]
 ```
 
 ## Modules and ownership
@@ -50,9 +53,22 @@ flowchart LR
  API -->|profile use cases| Makers
  Matching -->|eligibility query contract| Makers
  Matching -->|transition contract| Requests
+ Contracting -->|shared recommendation contract| Matching
+ Contracting -->|eligibility contract| Makers
+ Payments -->|reserve obligation and apply financial status| Contracting
+ API -->|contract use cases| Contracting
+ API -->|payment use cases| Payments
 ```
 
 Each module exposes explicit contracts and hides entities and persistence. Requests and Makers do not depend on Matching. Access supplies identity to the API, which passes actor context to the use case. Module calls stay in process. Direct reads and writes to another module's tables are prohibited.
+
+
+## Module extension
+
+| Module | Owned capability | Boundary |
+|---|---|---|
+| Contracting | Quotes, revisions, acceptances, orders, obligations and incidents. | Issues offers, freezes terms and coordinates acceptance/order. Exposes ReadAgreement, ReservePayableObligation and ApplyFinancialStatus. Does not call PayPal or write payment tables. |
+| Payments | Attempts, captures, refunds, inbox and durable operations. | Exposes Start, Capture, Reconcile and Refund. Only this module integrates external payment providers. Does not change commercial terms or manufacture. |
 
 ## Clean Architecture
 Arrows represent compile-time dependencies. At runtime, application code invokes a port whose infrastructure implementation accesses PostgreSQL.
@@ -66,14 +82,14 @@ flowchart LR
  Infra -->|maps entities| Domain
 ```
 
-Domain contains entities and business invariants with no web framework, ORM or PostgreSQL dependencies. Application coordinates use cases and defines persistence ports and module contracts. Infrastructure implements ports and migrations. API validates transport, authenticates, maps errors and composes dependencies.
+Domain contains entities and business invariants with no web framework, ORM, PostgreSQL or PayPal dependencies. Application coordinates use cases and defines persistence ports and module contracts. Infrastructure implements ports and migrations. API validates transport, authenticates, maps errors and composes dependencies.
 
 Proposed structure for later implementation, using separate projects where they protect boundaries.
 
 ```text
 frontend/                         React application, move only when useful
 backend/Furrify.Api/               HTTP and composition root
-backend/Modules/{Makers,Requests,Matching,Access}/
+backend/Modules/{Makers,Requests,Matching,Access,Contracting,Payments}/
   <Module>.Domain/
   <Module>.Application/           public module contracts and ports
   <Module>.Infrastructure/
@@ -122,27 +138,8 @@ erDiagram
 AccessActor is a logical identity which may be resolved without a permanent buyer account under D-01. Each permission decision preserves evidence of grant or refusal. MatchingIntroduction is created only after all policy-required permissions are checked. Works and publication permissions need author, time and evidence.
 
 ## API and operation
-Proposed HTTP resources depend on approved access policies.
 
-| HTTP | Resource |
-|---|---|
-| GET | /makers, /makers/{id}, /service |
-| POST, GET | /requests, /requests/{id} |
-| POST | /requests/{id}/reviews |
-| PUT | /requests/{id}/recommendations |
-| POST | /requests/{id}/publication |
-| POST | /recommendations/{id}/permissions |
-| POST | /recommendations/{id}/introductions |
-| PUT | /requests/{id}/outcome |
-| PUT | /makers/{id}, /makers/{id}/works/{workId} |
-
-Staff request lists and maker lists need pagination with a configurable maximum, stable ordering and a cursor or page decision. Enforce public, owner and staff permissions per operation. Staff authentication is mandatory. Provider and session choices are pending. Validate at API and application boundaries and enforce domain invariants. Return 400 for invalid input, 401 for missing authentication, 403 for insufficient permission, 404 under the chosen disclosure policy and 409 for conflicts. Use consistent error bodies with stable codes and correlation, excluding internal details.
-
-Proposed idempotency keys protect creation and introduction retries. Failed external delivery remains pending or failed and cannot count as a completed introduction. D-04 determines the contact channel. Do not hold database transactions open during external delivery.
-
-Separate liveness from readiness checks for database connectivity and applied migrations. Structured logs include timestamp, level, event and correlation. Exclude personal data, references, secrets and tokens. Validate configuration at startup, supply secrets through environment or a deployment secret manager, and exclude local secret files from Git. Back up the database and externally stored works, rehearse restore and agree RPO/RTO.
-
-Future domain tests check business rules. PostgreSQL integration tests check foreign keys, migrations, transactions and concurrency. API tests check authorization and full journeys cover submission through outcome. Local fixtures remain reproducible UI scenarios. See RNF and the acceptance map.
+HTTP contracts and pagination are authoritative in [contracts](contracts.md). Logical model and states are centralized in [transactional model](commerce-model.md). Diagrams here describe boundaries rather than replace those contracts.
 
 ## Docker design
 The frontend container serves static assets, with a proposed same-origin API proxy. The API container runs the monolith and alone connects to PostgreSQL over a private Compose network. Publish frontend/API HTTP according to the proxy and environment. PostgreSQL stays internal. A named volume for its data directory preserves records when recreating the container. Removing volumes is a separate destructive operation.
@@ -151,3 +148,17 @@ Proposed variables include public URL, database connection, database credentials
 
 ## Transition
 Approve access, age and consent policies first. Then implement modules and persistence with migrations and authorization tests, replace the local adapter with HTTP while preserving UI states, and prepare containers and restore exercises. Preserve the fictional journey as fixtures. Backend, database and containers remain unimplemented. See [decisions](../humans/decisions.md) and [lifecycle](lifecycle.md).
+
+## Compile-time contracts
+
+Each Application exposes only public DTO contracts and ports in a Contracts folder with internal implementations. Application references its own Domain and permitted modules’ Application Contracts. Infrastructure references its own Application and Domain. API is composition root and references applications/infrastructure for adapter registration. Domain references no other modules. DI resolves module contracts without public entities or shared data contexts. There is no Contracting → Payments dependency, avoiding a cycle.
+
+## Transactional operation
+
+PayPal is external, never a Compose service. Tests configure reachable HTTPS at /api/v1/webhooks/paypal using a chosen exposure tool and correct Sandbox app. Deployment uses a stable HTTPS domain and proxy preserving webhook body/headers. Proposed public port is 443, local development HTTP is configurable, PostgreSQL has no public deployment port. API listens on a configurable internal port. PayPal secrets are never compiled into Vite.
+
+API restart resumes Operations and Inbox by lease. Readiness checks database/migrations; PayPal unavailability reports degraded external capability without restarting or unnecessarily blocking reads. Migrations run once before API rollout, with API/schema compatibility. Backups include DB, permissions and media storage, encrypted with separate access. Restore requires checking obligations, captures and refunds against the provider before enabling new charging. Retention, RPO/RTO and frequency remain pending.
+
+Proposed events are quote.issued, quote.accepted, order.created, payment.intent_saved, payment.pending, payment.unknown, payment.verified, payment.quarantined, webhook.received, webhook.verified, reconciliation.completed and refund.completed. Allowed fields are timestamp, level, event, correlationId, operationId, orderId and internal attempt/refund IDs. Exclude bodies, terms, PII and tokens. Correlation links HTTP, workers and inbox, keeping provider IDs in restricted evidence only.
+
+[Model](commerce-model.md) · [Contracts and screens](contracts.md) · [Payments](payments.md) · [Test strategy](../humans/testing-strategy.md).

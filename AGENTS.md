@@ -12,10 +12,13 @@ Current code only displays a local fictional shortlist.
 - [Acceptance map](docs/product/acceptance-criteria.md).
 - [Human decision register](docs/humans/decisions.md).
 
+- [Transactional contracts](docs/architecture/contracts.md).
+- [Test strategy](docs/humans/testing-strategy.md).
+
 ## Constraints
 The confirmed stack is React, TypeScript, Vite, ASP.NET Core with C#, PostgreSQL, Docker and Compose.
 The target backend is one modular monolith using Clean Architecture.
-Domain stays independent of ASP.NET Core, ORM and PostgreSQL.
+Domain stays independent of ASP.NET Core, ORM, PostgreSQL and PayPal.
 Infrastructure implements inward-defined ports.
 Modules communicate through explicit in-process contracts.
 Each module owns its data. Avoid direct access to another module's tables.
@@ -49,3 +52,5 @@ For documentation-only changes, check links, IDs, translations and consistency.
 Report passed, failed, blocked or not_run according to evidence.
 Include commands, results, checked revision and evidence paths.
 State which checks were omitted and why.
+
+Money changes require unit, integration and system checks; report Sandbox separately. Future commands are specified only in the strategy.

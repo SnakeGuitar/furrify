@@ -6,7 +6,7 @@ Finding someone to bring a character to life means weighing style, budget and av
 
 Today you can open a sample shortlist and read two different reasons for the recommendations. The workshops, requests and recommendations are fictional. Looking up a code does not contact anyone.
 
-The buyer and maker handle production and their commercial agreement. Payments, delivery guarantees, production tracking and chat are outside the pilot's scope.
+The buyer and maker handle production and their commercial agreement. The new target adds quotes, orders, payments and refunds. Manufacturing, delivery guarantees, advanced logistics, production tracking and chat remain outside scope.
 
 The team still needs to decide how to confirm adulthood, which details may be shared with permission, how makers authorize portfolio items and which outcomes to record. [Try the demo](demo-guide.md).
 

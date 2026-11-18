@@ -43,11 +43,24 @@ sequenceDiagram
  Staff->>API: Review with expected revision
  API->>Requests: Record review
  Requests->>DB: Commit review and state
+ DB-->>Requests: Commit confirmed
+ Requests-->>API: Updated review
+ API-->>Staff: Review saved
  Staff->>API: Publish curated selection
  API->>Matching: Authorize staff and validate reasons
  Matching->>Makers: Check eligibility through contract
  Makers-->>Matching: Eligibility and revision
  Matching->>Requests: Transition through contract in shared transaction
- Matching->>DB: Commit recommendations and request state atomically
- API-->>Buyer: Read published selection on authorized lookup
+ Requests->>DB: Write owned state in shared transaction
+ Requests-->>Matching: State prepared
+ Matching->>DB: Write recommendations and commit shared transaction
+ DB-->>Matching: Commit confirmed
+ Matching-->>API: Published revision
+ API-->>Staff: Publication complete
+ Buyer->>API: Read own published selection
+ API->>Matching: ReadPublished with authorized context
+ Matching-->>API: Published selection
+ API-->>Buyer: Published selection
 ```
+
+This lifecycle describes requests and introductions. Quote, order, attempt and refund have separate states in the [transactional model](commerce-model.md). Closed here does not automatically close an order.
